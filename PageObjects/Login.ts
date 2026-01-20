@@ -57,6 +57,7 @@ export class CandidatePages{
   readonly learn: Locator;
   readonly grades: Locator;
   readonly managePayments: Locator;
+  
 
   constructor(page: Page) {
     this.page = page;
@@ -66,16 +67,69 @@ export class CandidatePages{
   
 }
 async navigateToCandidatePages() {
-  if(await this.managePayments.isVisible({timeout:5000})){
-    await this.managePayments.click();
-    await this.page.waitForLoadState('load');  
-    }
-    else{
-      console.log("Manage Payments link is not visible for this user");
-    }
+  const isVisible = await this.managePayments.isVisible();
+if (isVisible) {
+  await Promise.all([
+    this.page.waitForLoadState('networkidle'),
+    this.managePayments.click()
+  ]);
+} else {
+  console.log("Manage Payments link is not visible for this user");
+}
     await this.learn.click();
     await this.page.waitForLoadState('load'); 
     await this.grades.click();
     await this.page.waitForLoadState('domcontentloaded');
+    
+  }}
+
+  export class InstructorPages{
+  readonly page: Page;
+  readonly teach : Locator;
+  readonly reports: Locator;
+  readonly syllabus: Locator;
+  readonly mentor: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.teach = page.getByRole('link', { name: 'Teach' });
+    this.reports = page.getByRole('link', { name: 'Reports' });
+    this.syllabus = page.getByRole('link', { name: 'Syllabus' });  
+    this.mentor = page.getByRole('link', { name: 'Mentor' });
+}
+async navigateToInstructorPages() {
+  const isVisible = await this.mentor.isVisible();
+if (isVisible) {
+  await Promise.all([
+    this.page.waitForLoadState('networkidle'),
+    this.mentor.click()
+  ]);
+} else {
+  console.log("Manage Payments link is not visible for this user");
+}
+    await this.teach.click();
+    await this.page.waitForLoadState('load'); 
+    await this.reports.click();
+    await this.page.waitForLoadState('domcontentloaded');
+    await this.syllabus.click();
+    await this.page.waitForLoadState('load');
+    
+  }}
+
+  export class MentorPages{
+  readonly page: Page;
+  readonly profile : Locator;
+  readonly activity: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.profile = page.getByTitle('Profile ');
+    this.activity = page.getByRole('link', { name: 'Activity 2: Mentor Evaluation for InTASC Standards 1, 2, and 3' });
+  }
+async navigateToMentorPages() {
+    await this.activity.click();
+    await this.page.waitForLoadState('load');
+    await this.profile.click();
+    await this.page.waitForLoadState('load'); 
     
   }}
