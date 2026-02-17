@@ -27,6 +27,7 @@ export class CommonPages{
   readonly library: Locator;
   readonly clinical: Locator;
   readonly videoLibrary: Locator;
+  readonly certification: Locator;
   readonly profile: Locator;
   
   constructor(page: Page) {
@@ -35,18 +36,43 @@ export class CommonPages{
     this.library = page.locator('//*[@id="library"]');
     this.clinical = page.getByRole('link', { name: 'Clinical' });
     this.videoLibrary = page.getByRole('link', { name: 'Video Library' });
+    this.certification = page.getByRole('link', { name: 'Certification' });
     this.profile = page.getByTitle('Profile ');
 }
 
   async navigateToCommonPages() {
+    const isVisible1 = await this.clinical.isVisible();
+if (isVisible1) {
+  await Promise.all([
+    this.clinical.click(),
+    this.page.waitForLoadState('networkidle')
+  ]);
+} else {
+  console.log("Clinical link is not visible for this user");
+}
+
     await this.discussionForum.click();
-    await this.page.waitForLoadState('load');
+    await this.page.waitForLoadState('networkidle');
     await this.library.click();
-    await this.page.waitForLoadState('domcontentloaded');
-    await this.clinical.click();
+    await this.page.waitForLoadState('load');
+
+    
+  const isVisible2 = await this.certification.isVisible();
+if (isVisible2) {
+  await Promise.all([
+    this.page.waitForLoadState('networkidle'),
+    this.certification.click()
+   
+  ]);
+} else {
+  console.log("Certification link is not visible for this user");
+}
+    
+    
     await this.page.waitForLoadState('load');
     await this.videoLibrary.click();
     await this.page.waitForLoadState('domcontentloaded');
+    
     await this.profile.click();
     await this.page.waitForLoadState('load');
   }

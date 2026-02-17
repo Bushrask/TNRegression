@@ -4,6 +4,15 @@ import { LoginPage, CommonPages, CandidatePages, InstructorPages, MentorPages } 
 const login = "https://test.teach-now.com"
 const homePageUrl = "https://test.teach-now.com/home"        
 
+
+/* 🔹 Runs before every test in this file
+test.beforeEach(async ({ page }) => {
+  console.log('This runs before every test');
+  page.on('dialog', dialog => dialog.dismiss());
+  await page.locator('#close-btn').click();
+});*/
+
+
 test('Non B2B CERT user', async ({page}) => {
     const loginPage = new LoginPage(page);  
     const commonPages = new CommonPages(page);
@@ -13,10 +22,14 @@ test('Non B2B CERT user', async ({page}) => {
     // Login to user
     await loginPage.login('bushra6@gmail.com', 'te@ch');    
     await page.waitForURL(homePageUrl);
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
-    page.on('dialog', dialog => dialog.dismiss());
-    await page.locator('#close-btn').click();
+   await page.addLocatorHandler(
+    page.locator('#close-btn'),
+    async () => {
+      await page.locator('#close-btn').click();
+    }
+   )
 
     // navigate to common pages
     await commonPages.navigateToCommonPages();
@@ -33,10 +46,14 @@ test('B2B CERT user', async ({page}) => {
     // Login to user
     await loginPage.login('aawalker@ccps.org', 'te@ch');    
     await page.waitForURL(homePageUrl);
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
-    page.on('dialog', dialog => dialog.dismiss());
-    await page.locator('#close-btn').click();
+    await page.addLocatorHandler(
+    page.locator('#close-btn'),
+    async () => {
+      await page.locator('#close-btn').click();
+     }
+    )
 
     // navigate to common pages
     await commonPages.navigateToCommonPages();
@@ -53,10 +70,14 @@ test('MED user', async ({page}) => {
     // Login to user
     await loginPage.login('paige.fuller2@icloud.com', 'te@ch');    //arielarosia@yahoo.com add on 
     await page.waitForURL(homePageUrl);
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
-    page.on('dialog', dialog => dialog.dismiss());
-    await page.locator('#close-btn').click();
+    await page.addLocatorHandler(
+    page.locator('#close-btn'),
+    async () => {
+      await page.locator('#close-btn').click();
+    }
+   )
 
     // navigate to common pages
     await commonPages.navigateToCommonPages();
@@ -73,10 +94,14 @@ test('MEL user', async ({page}) => {
     // Login to user
     await loginPage.login('trevor.miller@phcharter.org', 'te@ch');    
     await page.waitForURL(homePageUrl);
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
-    page.on('dialog', dialog => dialog.dismiss());
-    await page.locator('#close-btn').click();
+    await page.addLocatorHandler(
+    page.locator('#close-btn'),
+    async () => {
+      await page.locator('#close-btn').click();
+    }
+   )
 
     // navigate to common pages
     await commonPages.navigateToCommonPages();
@@ -93,10 +118,14 @@ test('MRnG user', async ({page}) => {
     // Login to user
     await loginPage.login('francispaolo.pineda@gmail.com', 'te@ch');    
     await page.waitForURL(homePageUrl);
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
-    page.on('dialog', dialog => dialog.dismiss());
-    await page.locator('#close-btn').click();
+    await page.addLocatorHandler(
+    page.locator('#close-btn'),
+    async () => {
+      await page.locator('#close-btn').click();
+    }
+   )
 
     // navigate to common pages
     await commonPages.navigateToCommonPages();
