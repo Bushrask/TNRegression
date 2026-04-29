@@ -1,0 +1,32 @@
+{
+  "name": "tnregression",
+  "version": "1.0.0",
+  "description": "change test",
+  "main": "index.js",
+  "scripts": {
+    "bdd": "npx cucumber-js",
+    "report": "node scripts/generate-report.js",
+    "email": "node scripts/send-report.js",
+    "open-report": "node scripts/open-reports.js",
+    "bdd:partial": "npm run bdd --tags && npm run report && npm run open-report",
+    "bdd:full": "npm run bdd && npm run report && npm run open-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.6.0",
+    "cucumber-html-report": "^0.6.5",
+    "cucumber-html-reporter": "^5.0.2",
+    "nodemailer": "^8.0.5",
+    "ope": "^1.0.2"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^12.8.1",
+    "@cucumber/messages": "^32.3.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
+  }
+}
