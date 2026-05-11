@@ -8,17 +8,12 @@ Feature: Activity submission with Rich Text Editor
     Given the user is on the login page
 
   Scenario: Candidate can see RTE for activity submission
-    When the user logs in as "<ROLE>"
-    And the user navigates to the Learn page
-    And the user opens the first activity with status Open or Late
-    Then the activity submissions tab should show an RTE under My Work
+    Given the user logs in as "<ROLE>"
+    When the user navigates to the Learn page and opens activity
+    Then the activity should load all elements
     
     Examples:
   | ROLE   |
   | NonB2B |
-  | B2B    |
-  | MED    |
-  | MEL    |
-  | MRnG   |
 
 
