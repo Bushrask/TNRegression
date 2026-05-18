@@ -6,7 +6,7 @@ const testData = {
   },
 
   users: {
-    NonB2B: { email: "bushra6@gmail.com", password: "te@ch" },
+    NonB2B: { email: "testforautomation@yahoo.com", password: "te@ch" },
     B2B: { email: "aawalker@ccps.org", password: "te@ch" },
     MED: { email: "paige.fuller2@icloud.com", password: "te@ch" },
     MEL: { email: "trevor.miller@phcharter.org", password: "te@ch" },

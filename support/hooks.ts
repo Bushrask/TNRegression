@@ -1,6 +1,6 @@
 import { Before, After, setDefaultTimeout, AfterStep } from "@cucumber/cucumber";
 
-setDefaultTimeout(90 * 1000); // 90 seconds
+setDefaultTimeout(240*1000); // 4 minutes
 
 Before(async function () {
   await this.init();

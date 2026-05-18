@@ -14,6 +14,9 @@ export class AllActivitiesPage {
   private activityRows = () =>
     this.page.locator("#parentContentHolder .activity-list-table tbody tr");
 
+   private descTab: Locator =
+    this.page.getByRole("tab").first();
+
 
   async openActivitiesSequentially(
     perActivityAction: () => Promise<void>
@@ -25,15 +28,14 @@ export class AllActivitiesPage {
 
       console.log(`▶ Opening activity ${i + 1}/${count}`);
       await row.click();
-      await this.page.waitForLoadState("load");
+      await this.descTab.waitFor({ state: 'visible', timeout: 10000 });
+      await this.page.waitForLoadState("domcontentloaded");
 
       await this.ActivityPage.openSubmissionsTab(); // click on submissions tab to open acitvity submisions window
-      
+
       await this.validator.validateCurrentActivity();
 
       await perActivityAction(); //
-
-      await this.page.waitForSelector(".activity-list-table");
 
       count = await this.activityRows().count();
     }

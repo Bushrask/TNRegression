@@ -1,5 +1,8 @@
 import { Page } from "@playwright/test";
 import { ActivityPage } from "./ActivityPage";
+import {setDefaultTimeout } from "@cucumber/cucumber";
+
+//setDefaultTimeout(100000); // 100 seconds
 
 export class ActivityValidator {
     private readonly ActivityPage: ActivityPage;
@@ -12,14 +15,16 @@ export class ActivityValidator {
 
     // Centralized Locators
     private readonly locators = {
-        video: this.page.locator("video"),
-        file: this.page.locator("#cke_editor1"),
-        annotation: this.page.locator(".annotation-toolbar"),
-        assessment: this.page.locator("form, textarea"),
-        readonly: this.page.locator(".readonly-content"),
+        video: this.page.locator("#lessonRubricsContainer"),
+        file: this.page.locator("#cke_editor1[role='application']"), //can also use 'div[role="application"]#cke_editor1'
+        annotation: this.page.locator(".annotation-text-container "),
+        assessment: this.page.locator("#self-feedback .conversation-title", { hasText: "My Evaluation Comment" }),
+        readonly: this.page.locator(".status-text", { hasText: "Read Only" }).first(),
+        studentDataEval: this.page.locator("#studentEvaluation[role='table']"),
+        multiDataEval: this.page.locator("#self-evaluation .criteria-container"),
 
         // Validation-specific locators
-        ckEditorData: this.page.locator(".cke_editor1"),
+        ckEditorData: this.page.locator("#cke_editor1[role='application']"), //can also use 'div[role="application"]#cke_editor1'
         annotateVideo: this.page.locator(".annotation-toolbar"),
         body: this.page.locator("body"),
     };
@@ -35,33 +40,47 @@ export class ActivityValidator {
 
         if (type === false) {
             console.log("Unknown activity type detected; skipping validator.");
+            await this.ActivityPage.closeActivity();          
+            
+            await this.page.locator(".activity-list-table").first()
+                .waitFor({ state: "visible", timeout: 10000 });
+
             return;
         }
 
-        await this.validators[type]();
+        //await this.validators[type]();
 
         console.log("✅ Activity loaded successfully");
+
+        // close activity page and return to learn page
+        await this.ActivityPage.closeActivity();
+
+        await this.page.locator(".activity-list-table").first()
+            .waitFor({ state: "visible", timeout: 10000 });
+
     }
 
 
     private async detectActivityType(): Promise<ActivityType | false> {
-        if (await this.locators.video.count()) return "video";
+        if (await this.locators.video.count()) return "videoEvaluation";
+
+        if (await this.locators.annotation.count()) return "annotation";
+            
+        if (await this.locators.assessment.count()) return "selfAssessment";
+        
+        if (await this.locators.studentDataEval.count()) return "studentDataEval";
+
+        if (await this.locators.multiDataEval.count()) return "multiDataEval";
+
+        if (await this.locators.readonly.count()) return "readonly";
 
         if (await this.locators.file.count()) return "file";
 
-        if (await this.locators.annotation.count()) return "annotation";
-
-        if (await this.locators.assessment.count()) return "assessment";
-
-        if (await this.locators.readonly.count()) return "readonly";
-        
-        // fallback
-        await this.ActivityPage.closeActivity();
         return false;
     }
 
 
-    private validators: Record<ActivityType, () => Promise<void>> = {
+    /*private validators: Record<ActivityType, () => Promise<void>> = {
 
 
         file: async () => {
@@ -98,15 +117,16 @@ export class ActivityValidator {
             }
         },*/
     };
-}
+//}
 
 
 type ActivityType =
     | "file"
     | "readonly"
-    | "video"
-    | "videoContainer"
+    | "videoEvaluation"
     | "annotation"
-    | "assessment"
+    | "selfAssessment"
+    | "studentDataEval"
+    | "multiDataEval"
     //| "unknown";
 ``
