@@ -1,0 +1,102 @@
+[
+  {
+    "description": "  As a learner, I want to submit my work for an activity\n  so that I can complete the learning requirements.",
+    "elements": [
+      {
+        "description": "",
+        "id": "activity-submission-with-rich-text-editor;candidate-can-see-all-elements-of-the-activity-when-they-open-it",
+        "keyword": "Scenario",
+        "line": 17,
+        "name": "Candidate can see all elements of the activity when they open it",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 534602700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "the user is on the login page",
+            "match": {
+              "location": "tests\\step-definitions\\login.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2945412699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 11,
+            "name": "the user logs in as \"NonB2B\"",
+            "match": {
+              "location": "tests\\step-definitions\\login.steps.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 6493390900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 12,
+            "name": "the user navigates to the Learn page and opens activity",
+            "match": {
+              "location": "tests\\step-definitions\\FLT_activity_submission.steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11122471700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 13,
+            "name": "the activity should load all elements",
+            "match": {
+              "location": "tests\\step-definitions\\FLT_activity_submission.steps.ts:35"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 119781376198
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 578926800
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@activitySubmission",
+            "line": 1
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "activity-submission-with-rich-text-editor",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Activity submission with Rich Text Editor",
+    "tags": [
+      {
+        "name": "@activitySubmission",
+        "line": 1
+      }
+    ],
+    "uri": "tests\\features\\FLT_activity_submission.feature"
+  }
+]
