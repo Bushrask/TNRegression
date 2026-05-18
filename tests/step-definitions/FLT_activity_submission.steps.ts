@@ -10,7 +10,7 @@ type UserRole = keyof typeof testData.users;
 
 /* ---------------- LOGIN STEPS ---------------- */
 
-Given("the user logs in as {string} for activity submission",
+Given("the user logs in as {string} role",
     async function (role: UserRole) {
 
         const loginPage = new LoginPage(this.page);
@@ -29,10 +29,11 @@ When("the user navigates to the Learn page and opens activity", async function (
 
   this.activities = new AllActivitiesPage(this.page);
   this.activityPage = new ActivityPage(this.page);
+
 });
 
 
-Then("the activity should load all elements", async function () {
+Then("the activity should get successfully loaded and submitted", async function () {
 
     await this.activities.openActivitiesSequentially(async () => {
       //await this.activityPage.openSubmissionsTab();
