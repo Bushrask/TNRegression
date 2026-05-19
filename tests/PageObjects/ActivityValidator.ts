@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { Page } from "@playwright/test";
 import { ActivityPage } from "./ActivityPage";
 import { setDefaultTimeout } from "@cucumber/cucumber";
 
@@ -99,21 +99,21 @@ export class ActivityValidator {
       case "videoEvaluation":
         await this.submitVideoActivity();
         break;
-      /*case "file":
+      case "file":
           await this.submitFileActivity();
-          break;*/
+          break;
       case "annotation":
         await this.submitAnnotationActivity();
         break;
-      /*case "selfAssessment":
+      case "selfAssessment":
           await this.submitAssessmentActivity();
-          break;*/
-      /*case "studentDataEval":
+          break;
+      case "studentDataEval":
           await this.submitStudentDataEvalActivity();
-          break;*/
-      /*case "multiDataEval":
+          break;
+      case "multiDataEval":
           await this.submitMultiDataEvalActivity();
-          break;*/
+          break;
       default:
         console.warn("Unknown activity type for submission");
     }
@@ -142,7 +142,6 @@ export class ActivityValidator {
   private async submitAnnotationActivity(): Promise<void> {
     console.log("Submitting annotation activity...");
     await this.locators.annotation_text.click();
-    await this.page.pause(); // Debug pause to inspect dropdown options
     await this.locators.annotation_text.fill("Text annotation submission");
     await this.locators.annotation_submit.click();
     await this.locators.submit_activity.click();

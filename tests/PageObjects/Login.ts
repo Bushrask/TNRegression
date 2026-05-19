@@ -125,16 +125,6 @@ async navigateToCandidatePages() {
 
     console.log("Finished CandidatePages navigation");
 
-  /*const isVisible = await this.managePayments.isVisible();
-if (isVisible) {
-  await Promise.all([
-    this.page.waitForLoadState('networkidle'),
-    this.managePayments.click()
-  ]);
-} else {
-  console.log("Manage Payments link is not visible for this user");
-}*/
-
     
   }
 }
