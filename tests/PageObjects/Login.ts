@@ -96,6 +96,7 @@ export class CandidatePages{
   readonly learn: Locator;
   readonly grades: Locator;
   readonly managePayments: Locator;
+  readonly documents: Locator;
   
 
   constructor(page: Page) {
@@ -103,7 +104,7 @@ export class CandidatePages{
     this.learn = page.getByRole('link', { name: 'Learn' });
     this.grades = page.getByRole('link', { name: 'Grades' });
     this.managePayments = page.locator('//*[@id="managePayments"]');
-  
+    this.documents = page.getByRole('link', { name: 'Documents' });
 }
 
 async navigateToCandidatePages() {
@@ -112,6 +113,8 @@ async navigateToCandidatePages() {
     await this.learn.click();
     await this.grades.waitFor({ state: "visible", timeout: 20_000 });
     await this.grades.click();
+    await this.documents.waitFor({ state: "visible", timeout: 20_000 });
+    await this.documents.click();
     await this.page.waitForLoadState('domcontentloaded');
 
 
