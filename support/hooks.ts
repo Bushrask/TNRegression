@@ -20,7 +20,8 @@ After(async function () {
 
 AfterStep(async function ({ result }) {
   if (result?.status === "FAILED") {
-    const screenshot = await this.page.screenshot({ fullPage: true });
+    const path = `screenshots/error_${Date.now()}.png`;
+    const screenshot = await this.page.screenshot({path, fullPage: true });
     this.attach(screenshot, "image/png");
   }
 });

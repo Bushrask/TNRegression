@@ -37,7 +37,7 @@ export class ActivityValidator {
     revise_eval: this.page.locator("#revise-evaluation"),
     submit_activity: this.page.locator("#submit-activity"),
     revise_activity: this.page.locator("#revise-activity"),
-    activity_status: this.page.locator("#activityStatus .activity-status").nth(1),
+    activity_status: this.page.locator("#tab-2-content #activityStatus .activity-status"),
     candidate_rubrics: this.page.getByRole("radio").nth(1),
     video_rubrics_collapse: this.page.locator("#lessonRubricsContainer .collapse-btn")
 
@@ -168,6 +168,7 @@ export class ActivityValidator {
     await this.locators.submit_activity.click();
     await expect(this.locators.revise_activity).toBeVisible({ timeout: 10000 });
     await expect(activity_status_text).toBe('submitted');
+    console.log("Activity status changed to Submitted");
 
 
   }
@@ -178,7 +179,11 @@ export class ActivityValidator {
     await this.locators.submit_activity.click();
     await this.page.waitForLoadState("load");
     await expect(this.locators.revise_activity).toBeVisible();
+    await this.page.waitForTimeout(1500);
+    await this.page.pause();
     await expect(activity_status_text).toBe('submitted');
+    console.log("Activity status changed to Submitted");
+
   }
 
   private async submitAnnotationActivity(activity_status_text: string): Promise<void> {
@@ -188,17 +193,24 @@ export class ActivityValidator {
     await this.locators.submit_activity.click();
     await this.page.waitForLoadState("load");
     await expect(this.locators.revise_activity).toBeVisible();
+    await this.page.waitForTimeout(1500);
     await expect(activity_status_text).toBe('submitted');
+    console.log("Activity status changed to Submitted");
+
 
   }
 
   private async submitAssessmentActivity(activity_status_text: string): Promise<void> {
+    await this.locators.candidate_rubrics.click();;
     await this.locators.file.click();
     await this.locators.file.fill("Text Self assessment submission submission");
     await this.locators.submit_eval.click();
     await this.page.waitForLoadState("load");
     await expect(this.locators.revise_activity).toBeVisible();
+    await this.page.waitForTimeout(1500);
     await expect(activity_status_text).toBe('submitted');
+    console.log("Activity status changed to Submitted");
+
   }
 
   private async submitStudentDataEvalActivity(activity_status_text: string): Promise<void> {
@@ -211,14 +223,19 @@ export class ActivityValidator {
     await this.locators.submit_activity.click();
     await this.page.waitForLoadState("load");
     await expect(this.locators.revise_activity).toBeVisible();
+    await this.page.waitForTimeout(1500);
     await expect(activity_status_text).toBe('submitted');
+    console.log("Activity status changed to Submitted");
+
   }
 
   private async submitMultiDataEvalActivity(activity_status_text: string): Promise<void> {
     await this.locators.candidate_rubrics.click();;
     await this.locators.submit_eval.click();
-    await this.page.waitForLoadState("load");
+    await this.page.waitForTimeout(1500);
     await expect(activity_status_text).toBe('submitted');
+    console.log("Activity status changed to Submitted");
+
 
 
   }
@@ -227,6 +244,8 @@ export class ActivityValidator {
     await this.page.keyboard.press('End');
     await this.page.waitForTimeout(1500);
     await expect(activity_status_text).toBe('completed');
+    console.log("Activity status changed to Completed");
+
   }
 
 };

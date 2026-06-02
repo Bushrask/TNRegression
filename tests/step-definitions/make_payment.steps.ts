@@ -15,7 +15,7 @@ Given("the user logs in as {string} role",
     await loginPage.loginAs(role);
   });
 
-/* -------- MANAGE PAYMENT -------- */
+/* -------- MAKE PAYMENT VIA MANAGE PAYMENT -------- */
 
 When("the user navigates to the Manage Payment page and opens Make Payments pop up", async function () {
   await this.page.locator('//*[@id="managePayments"]').click();
@@ -23,10 +23,10 @@ When("the user navigates to the Manage Payment page and opens Make Payments pop 
   await this.page.locator('#paymentQR').click();
 
   const MakePayment = new MakePaymentPage(this.page);
-  await MakePayment.makePayment();
+  await MakePayment.makeAnyAmountPayment();
 });
 
-/* -------- PROFILE -------- */
+/* -------- MAKE PAYMENT VIA PROFILE -------- */
 
 When("the user navigates to the Profile page and opens Make Payments pop up", async function () {
   await this.page.getByAltText('profile picture').click();
@@ -34,8 +34,56 @@ When("the user navigates to the Profile page and opens Make Payments pop up", as
   await this.page.locator('#paymentQR').click();
 
   const MakePayment = new MakePaymentPage(this.page);
-  await MakePayment.makePayment();
+  await MakePayment.makeAnyAmountPayment();
 });
+
+
+/* -------- PURCHASE TESTPREP VIA MANAGE PAYMENT -------- */
+
+When("the user navigates to the Manage Payment page and opens Purchase TestPrep pop up", async function () {
+  await this.page.locator('//*[@id="managePayments"]').click();
+  await this.page.waitForLoadState("domcontentloaded");
+  await this.page.locator('#testPrep').click();
+
+  const MakePayment = new MakePaymentPage(this.page);
+  await MakePayment.purchaseTestPrep();
+});
+
+/* -------- PURCHASE TESTPREP VIA PROFILE -------- */
+
+When("the user navigates to the Profile page and opens Purchase TestPrep pop up", async function () {
+  await this.page.getByAltText('profile picture').click();
+  await this.page.waitForLoadState("domcontentloaded");
+  await this.page.locator('#testPrep').click();
+
+  const MakePayment = new MakePaymentPage(this.page);
+  await MakePayment.purchaseTestPrep();
+});
+
+
+/* -------- PARCHMENT PAYMENT VIA MANAGE PAYMENT -------- */
+
+When("the user navigates to the Manage Payment page and opens Make Payment pop up and selects parchment option", async function () {
+  await this.page.locator('//*[@id="managePayments"]').click();
+  await this.page.waitForLoadState("domcontentloaded");
+  await this.page.locator('#paymentQR').click();
+
+  const MakePayment = new MakePaymentPage(this.page);
+  await MakePayment.makeParchmentPayment();
+});
+
+/* -------- PARCHMENT PAYMENT VIA PROFILE -------- */
+
+When("the user navigates to the Profile page and opens Make Payment pop up and selects parchment option", async function () {
+  await this.page.getByAltText('profile picture').click();
+  await this.page.waitForLoadState("domcontentloaded");
+  await this.page.locator('#paymentQR').click();
+
+  const MakePayment = new MakePaymentPage(this.page);
+  await MakePayment.makeParchmentPayment();
+});
+
+/* -------- fINAL THEN BLOCK -------- */
 
 Then("the user should be able to make successful payment using PayPal", async function () {
 
@@ -43,5 +91,4 @@ Then("the user should be able to make successful payment using PayPal", async fu
   await expect(this.page.getByText('Payment Successful!')).toBeVisible();
   console.log("Payment Made successfully via PayPal");
 });
-``
 
