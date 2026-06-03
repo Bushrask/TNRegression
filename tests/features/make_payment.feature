@@ -36,7 +36,7 @@ Feature: Make payment using paypal
     Scenario Outline: Candidate can purchase testPrep from Profile page
       Given the user logs in as "NonB2B"
       When the user navigates to the Profile page and opens Purchase TestPrep pop up
-      Then the user should be able to make successful payment using PayPal3
+      Then the user should be able to make successful payment using PayPal
 
     @parchment
     Scenario Outline: Candidate can purchase parchment from Profile page

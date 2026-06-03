@@ -1,5 +1,4 @@
 import { Locator, Page } from '@playwright/test';
-import { expect } from "@playwright/test";
 
 
 
@@ -23,6 +22,7 @@ export class MakePaymentPage {
     readonly mailingphoneNumberField: Locator;
     readonly useForFutureCheckbox: Locator
     readonly checkoutButton: Locator;
+    readonly checkoutTestPrepButton: Locator;
     readonly ppcheckout: Locator;
     readonly paypalConsentButton: Locator;
     attach: any;
@@ -48,6 +48,7 @@ export class MakePaymentPage {
         this.mailingphoneNumberField = page.locator('#mailing-phone');
         this.useForFutureCheckbox = page.locator('#make-default-checkbox');
         this.checkoutButton = page.locator('#checkoutOrder');
+        this.checkoutTestPrepButton = page.locator('#checkoutTestPrepOrder');
         this.ppcheckout = page.frameLocator('iframe.zoid-visible[name*="ppbutton"]').getByRole('button', { name: 'PayPal Checkout' });
         this.paypalConsentButton = page.getByTestId('consentButton');
     }
@@ -116,7 +117,7 @@ export class MakePaymentPage {
             await this.mailingcityField.fill('test city');
             await this.mailingzipCodeField.click();
             await this.mailingzipCodeField.fill('12345');
-            
+
             /*if (await this.mailingphoneNumberField.isVisible({ timeout: 5000 }) && await this.useForFutureCheckbox.isVisible() && await this.checkoutButton.isVisible()) {
                 await this.mailingphoneNumberField.click();    
                 await this.mailingphoneNumberField.fill('+36554875');
@@ -164,28 +165,40 @@ export class MakePaymentPage {
     }
 
     async purchaseTestPrep() {
+        await this.page.waitForTimeout(5000);
+        await this.page.pause();
+
         await this.safelyExecute("Purchase Test Prep", async () => {
-            await this.page.pause();
-            const checkboxes = this.page.locator('.testprep-list-body .test');
-            const checkboxCount = await checkboxes.count();
+            //const checkboxes = this.page.locator('.testprep-list-body .test');
+
+            const checkboxes = this.page.locator(
+                '.testprep-list-body .test:not(:has-text("PURCHASED")) input[type="checkbox"]'
+            );
+
+            const count = await checkboxes.count();
+
             let isCheckboxChecked = false;
 
-            for (let i = 0; i < checkboxCount; i++) {
-                const checkboxelement = this.page.locator('.testprep-list-body .test input[type="checkbox"]').nth(i);
-                if ((checkboxCount) >= 0 && await checkboxelement.isEnabled()) {
-                    await checkboxelement.check();
-                    await expect(checkboxelement).toBeChecked();
+
+            for (let i = 0; i < count; i++) {
+                const checkbox = checkboxes.nth(i);
+
+
+                if (await checkbox.isVisible() && await checkbox.isEnabled()) {
+                    await checkbox.check(); // ✅ no force
+                    isCheckboxChecked = true;
+                    break; // ✅ first valid checkbox only
                 }
-                isCheckboxChecked = true;
-                break;
             }
+
+
 
             if (isCheckboxChecked) {
                 await this.page.locator('#nextBtn').waitFor({ 'state': 'visible' });
                 await this.page.locator('#nextBtn').click();
                 await this.payPalOption.check();
-                await this.checkoutButton.waitFor({ 'state': 'visible' });
-                await this.checkoutButton.click();
+                await this.checkoutTestPrepButton.waitFor({ 'state': 'visible' });
+                await this.checkoutTestPrepButton.click();
 
                 await this.paypal();
 
