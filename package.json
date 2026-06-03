@@ -4,13 +4,14 @@
   "description": "change test",
   "main": "index.js",
   "scripts": {
-    "bdd": "npx cucumber-js",
+    "bdd": "node scripts/run-bdd-with-report.js",
+    "bdd:main": "npx cucumber-js",
+    "generate-data": "node scripts/generate-test-data.js",
     "report": "node scripts/generate-report.js",
     "email": "node scripts/send-report.js",
-    "open-report": "node scripts/open-reports.js",
-    "bdd:partial": "npm run bdd --tags && npm run report && npm run open-report",
-    "bdd:full": "npm run bdd && npm run report && npm run open-report"
+    "open-report": "node scripts/open-reports.js"
   },
+    
   "keywords": [],
   "author": "",
   "license": "ISC",
