@@ -9,7 +9,7 @@ Feature: Activity submission with Rich Text Editor
     
   @activitySubmission
   Scenario: Candidate can see all elements of the activity when they open it
-    Given the user logs in as "<ROLE>"
+    Given the user logs in as "<ROLE>" for activity submission
     When the user navigates to the Learn page and opens activity
     Then the activity should get successfully loaded and submitted
     

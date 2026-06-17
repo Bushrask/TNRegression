@@ -7,6 +7,7 @@
     "bdd": "node scripts/run-bdd-with-report.js",
     "bdd:main": "npx cucumber-js",
     "generate-data": "node scripts/generate-test-data.js",
+    "delete-data": "node scripts/delete-test-data.js",
     "report": "node scripts/generate-report.js",
     "email": "node scripts/send-report.js",
     "open-report": "node scripts/open-reports.js"

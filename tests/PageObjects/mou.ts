@@ -131,9 +131,8 @@ export class ClinicalPage {
 
     // -------- POPUP --------
     async verifyMouPopupVisible() {
-        await this.mouPopup.waitFor({ state: 'visible' }); //WORK ON MODAL CONTAINER TO AVOID FLAKINESS
-        await expect(this.mouPopup).toBeVisible();
-        await this.mouPopup.focus();
+        const bodyContent = await this.mouPopup.textContent();
+        expect(bodyContent).toContain('Can we send a Memorandum of Understanding (MoU) document to your school supervisor?');
     }
 
     async handleMouPopup() {

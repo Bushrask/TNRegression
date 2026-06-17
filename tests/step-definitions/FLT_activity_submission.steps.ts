@@ -10,7 +10,7 @@ type UserRole = keyof typeof testData.users;
 
 /* ---------------- LOGIN STEPS ---------------- */
 
-Given("the user logs in as {string} role",
+Given("the user logs in as {string} for activity submission",
     async function (role: UserRole) {
 
         const loginPage = new LoginPage(this.page);

@@ -2,6 +2,7 @@ import { Given, When, Then } from "@cucumber/cucumber";
 import { ClinicalPage } from "../PageObjects/mou";
 import { LoginPage } from "../PageObjects/Login";
 import testData from "../../support/testData";
+import configData from '../../support/configData';
 
 
 let clinicalPage: ClinicalPage;
@@ -32,12 +33,13 @@ When('the user clicks on Save', async function () {
 });
 
 Then('a confirmation pop up to send MOU to school supervisor should appear', async function () {
-
+    //this.skipPopupHandling = true;
     await clinicalPage.verifyMouPopupVisible();
 });
 
 When('the user clicks Yes on the pop up', async function () {
     await clinicalPage.handleMouPopup();
+    //this.skipPopupHandling = false;
 });
 
 Then('the MOU should be sent to the school supervisor', async function () {

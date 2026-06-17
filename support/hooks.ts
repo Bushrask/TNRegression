@@ -3,36 +3,26 @@ import { Before, After, setDefaultTimeout, AfterStep } from "@cucumber/cucumber"
 setDefaultTimeout(240*1000); // 4 minutes
 
 
-Before(async function () {
+  Before(async function () {
   await this.init();
 
-  this.skipPopupHandler = false;
-  
-
-/*await this.page.addLocatorHandler(
-  this.page.locator('#close-btn'),
-  async () => {
-    const isMouPopupVisible = await this.page
-      .locator('#popup-div .modal-content.popup-info-container') 
-      .isVisible()
-      .catch(() => false);
-
-    // ❗ skip closing if it's MOU popup
-    if (!isMouPopupVisible) {
-      await this.page.locator('#close-btn').click();
-    }
-  }
-);*/
 
 
 await this.page.addLocatorHandler(
-  this.page.locator('.non-mou-popup #close-btn'), // ✅ scope here
+  this.page.locator('#close-btn'),
   async () => {
-    await this.page.locator('.non-mou-popup #close-btn').click();
+    // Optional: skip specific popup
+    const title = await this.page.locator('#popup-div .modal-content.popup-info-container').textContent();
+
+    if (title && title.includes('Memorandum of Understanding (MoU)')) {
+      return; // skip MoU popup
+    }
+
+    await this.page.locator('#close-btn').click();
   }
 );
+  })
 
-})
 
 
 After(async function () {

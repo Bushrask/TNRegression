@@ -7,7 +7,7 @@ const options = {
   output: `reports/cucumber-report-${timestamp}.html`,
   reportSuiteAsScenarios: true,
   scenarioTimestamp: true,
-  launchReport: false,
+  launchReport: true,
 
   metadata: {
     "App Version": "LMS",

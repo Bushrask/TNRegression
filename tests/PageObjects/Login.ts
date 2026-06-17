@@ -1,5 +1,6 @@
 import {Locator, Page} from '@playwright/test';
 import testData from "../../support/testData";
+import { configData } from '../../support/configData';
 
 type UserRole = keyof typeof testData.users;
 export class LoginPage {
@@ -22,13 +23,14 @@ export class LoginPage {
 
 async loginAs(role: UserRole) {
     const user = testData.users[role];
+    const configUser = configData.candidate;
 
     if (!user) {
       throw new Error(`User role '${role}' not found in test data`);
     }
 
     await this.navigateToLoginPage();
-    await this.login(user.email, user.password);
+    await this.login(configUser.email, user.password);
     await this.page.waitForURL(testData.urls.home, { timeout: 30000 });
     await this.page.waitForLoadState("domcontentloaded");
   }
